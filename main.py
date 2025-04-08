@@ -1,31 +1,42 @@
-# "simple command line menu in python"
-
-def show_menu(options):
+def show_main_menu():
     print("Menu:")
-    for i, option in enumerate(options):
-        print(f"{i + 1}. {option}")
+    print("1.Create new customer")
+    print("2. Edit Customer")
+    print("3. Delete Customer")
+    print("x. Exit")
 
-def get_choice(options):
-    while True:
-        try:
-            choice = int(input("Enter your choice: "))
-            if 1 <= choice <= len(options):
-                return choice
-            else:
-                print("Invalid choice. Please try again.")
-        except ValueError:
-            print("Invalid input. Please enter a number.")
+def edit_customer(customer_id):
+    customer_name = input("Customer Name: ")
+    credit_limit = int(input("Credit Limit: "))
+    print("If this were implemented we would update the following")
+    print(f"{customer_name=}")
+    print(f"{credit_limit=}")
+
+    # TODO: update logic goes here
+
+    return
+
+def handle_choice(choice):
+    if choice == '1':
+        print("Executing Option 1...")
+    elif choice == '2':
+        print("Executing Option 2...")
+        edit_customer(1) # Need a customer #!!!
+    elif choice == '2':
+        print("Executing Option 3...")
+    elif choice.lower() == 'x':
+        print("Exiting...")
+        return True
+    else:
+        print("Invalid choice. Please try again.")
+    return False
 
 def main():
-    options = ["Option 1", "Option 2", "Option 3", "Exit"]
     while True:
-        show_menu(options)
-        choice = get_choice(options)
-
-        if choice == len(options):
+        show_main_menu()
+        choice = input("Enter your choice: ")
+        if handle_choice(choice):
             break
-        else:
-            print(f"You chose: {options[choice - 1]}")
 
-if __name__ == "__main__":
+if (__name__ == '__main__'):
     main()

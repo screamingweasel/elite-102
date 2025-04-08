@@ -1,25 +1,31 @@
-###################################################################################################
-# Sample main python program to be tested
-# Always structure your "main" as a function and then the only inline code should be 
-# the call to main at the bottom. This is so your program can be imported as a module to call
-# the functions without running the main code.
-###################################################################################################
-import sys
+# "simple command line menu in python"
 
-# Example function
-def add_two(x,y):
-    return x + y
+def show_menu(options):
+    print("Menu:")
+    for i, option in enumerate(options):
+        print(f"{i + 1}. {option}")
 
-def open_connection():
-    return None
-
-def add_account(first_name, last_name, email_address, pin, is_admin):
-    # dummy for now
-    return 1
+def get_choice(options):
+    while True:
+        try:
+            choice = int(input("Enter your choice: "))
+            if 1 <= choice <= len(options):
+                return choice
+            else:
+                print("Invalid choice. Please try again.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
 
 def main():
-    print("This is main.py")
+    options = ["Option 1", "Option 2", "Option 3", "Exit"]
+    while True:
+        show_menu(options)
+        choice = get_choice(options)
 
-# This is only true when the program is run from command line (not when imported)
-if (__name__ == "__main__"):
+        if choice == len(options):
+            break
+        else:
+            print(f"You chose: {options[choice - 1]}")
+
+if __name__ == "__main__":
     main()

@@ -23,10 +23,40 @@ def edit_customer(customer_id):
     print(f"{customer_name=}")
     print(f"{credit_limit=}")
 
-    # TODO: update logic goes here
+def insert_users(user_name,email_address,admin_flag,password):
+    sql = """
+    INSERT INTO `bank`.`users`
+    (`user_name`,
+    `email_address`,
+    `admin_flag`,
+    `password`)
+    VALUES (%s,%s,%s,%s)
+    """
+    data = [user_name, email_address, admin_flag, password]
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(sql, data)
+    id = cursor.lastrowid # << This returns auto_increment value of inserted row
+    return id
 
-    return
+def create_user():
+    user_name = input("Name: ")
+    email_address = input("Email Address: ")
+    password = input("Password: ")
+    admin_flag = False
 
+    id = insert_users(user_name,email_address,admin_flag,password)
+    print("Account Created")
+    return id
+
+"""
+INSERT INTO `bank`.`accounts`
+(`user_id`,
+`balance`,
+`active_flag`,
+`accountscol`)
+VALUES (%s,%s,%s,%s);
+"""
 
 def create_customer():
     # Make sure that this is a new email address
@@ -67,7 +97,8 @@ def add_customer(customer_name, email_address, credit_limit):
 
 def handle_choice(choice):
     if choice == '1':
-       create_customer()
+       create_user()
+       #create_customer()
     elif choice == '2':
         print("Executing Option 2...")
         edit_customer(1) # Need a customer #!!!

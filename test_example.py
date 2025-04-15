@@ -5,7 +5,7 @@ class TestMain(unittest.TestCase):
 
     def test_add_two(self):
         result = example.add_two(1,1)
-        self.assertEquals(result, 2)
+        self.assertEqual(result, 2)
 
     # This should fail
     def test_open_connection(self):
@@ -17,5 +17,5 @@ class TestMain(unittest.TestCase):
         self.assertIsNotNone(result)
 
 if __name__ == '__main__':
-    print("Foo")
+    print("Performing Tests")
     unittest.main()

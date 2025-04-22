@@ -9,13 +9,6 @@ def get_connection():
         autocommit=True) # << save changes as soon as made
     return connection
 
-def show_main_menu():
-    print("Menu:")
-    print("1. Create new customer")
-    print("2. Edit Customer")
-    print("3. Delete Customer")
-    print("x. Exit")
-
 def edit_customer(customer_id):
     customer_name = input("Customer Name: ")
     credit_limit = int(input("Credit Limit: "))
@@ -94,29 +87,56 @@ def add_customer(customer_name, email_address, credit_limit):
     customer_id = cursor.lastrowid # << This returns auto_increment value of inserted row
     return customer_id
 
+def make_deposit():
+    amt = input("Enter Deposit Amount: ")
+    print(amt)
+    return
 
 def handle_choice(choice):
-    if choice == '1':
-       create_user()
-       #create_customer()
-    elif choice == '2':
-        print("Executing Option 2...")
-        edit_customer(1) # Need a customer #!!!
-    elif choice == '2':
-        print("Executing Option 3...")
-    elif choice.lower() == 'x':
-        print("Exiting...")
-        return True
-    else:
-        print("Invalid choice. Please try again.")
-    return False
+    pass
+
+def show_main_menu():
+    print("Menu:")
+    print("1. Create new customer")
+    print("2. Edit Customer")
+    print("3. Delete Customer")
+    print("4. Make Deposit")
+    print("x. Exit")
+
+def login():
+    email_address = input("Email Address: ")
+    password = input("Enter Password: ")
+    customer = get_customer_by_email(email_address)
+    print(customer)
+    return None
 
 def main():
+    customer_id = login()
+    if customer_id is None:
+        add_account = input("Would you like to open an account")
+        if add_account == 'y':
+            customer_id = create_user()
+        else:
+            print("Goodbye.")
+            return
+
     while True:
         show_main_menu()
         choice = input("Enter your choice: ")
-        if handle_choice(choice):
+        if choice == '1':
+            create_user()
+        elif choice == '2':
+            print("Executing Option 2...")
+            edit_customer(1) # Need a customer #!!!
+        elif choice == '2':
+            print("Executing Option 3...")
+        elif choice == '4':
+            make_deposit()
+        elif choice.lower() == 'x':
+            print("Exiting...")
             break
+        else:
+            print("Invalid choice. Please try again.")
 
 if (__name__ == '__main__'):
     main()

@@ -39,7 +39,6 @@ def create_user():
     admin_flag = False
 
     id = insert_users(user_name,email_address,admin_flag,password)
-    print("Account Created")
     return id
 
 """
@@ -68,8 +67,8 @@ def create_customer():
     input("Customer added. Press Enter to continue")
 
 
-def get_customer_by_email(email_address):
-    sql = "SELECT * FROM demo.customers where email_address = %s"
+def get_user_by_email(email_address):
+    sql = "SELECT * FROM `bank`.`users` where email_address = %s"
     data = [email_address]
     conn = get_connection()
     cursor = conn.cursor()
@@ -87,41 +86,37 @@ def add_customer(customer_name, email_address, credit_limit):
     customer_id = cursor.lastrowid # << This returns auto_increment value of inserted row
     return customer_id
 
-def make_deposit():
-    amt = input("Enter Deposit Amount: ")
-    print(amt)
-    return
-
-def handle_choice(choice):
-    pass
 
 def show_main_menu():
-    print("Menu:")
-    print("1. Create new customer")
-    print("2. Edit Customer")
-    print("3. Delete Customer")
-    print("4. Make Deposit")
-    print("x. Exit")
+
+
 
 def login():
+    print("Login")
     email_address = input("Email Address: ")
     password = input("Enter Password: ")
-    customer = get_customer_by_email(email_address)
-    print(customer)
-    return None
+    user = get_user_by_email(email_address)
+    if user[4] == password:
+        return user[0] # ID
+    else:
+        return None
 
 def main():
-    customer_id = login()
-    if customer_id is None:
-        add_account = input("Would you like to open an account")
+    user_id = login()
+    if user_id is None:
+        add_account = input("Would you like to open an account? (y/n): ")
         if add_account == 'y':
-            customer_id = create_user()
+            user_id = create_user()
         else:
             print("Goodbye.")
             return
 
     while True:
-        show_main_menu()
+        print("Menu:")
+        print("2. Edit Customer")
+        print("3. Delete Customer")
+        print("4. Make Deposit")
+        print("x. Exit")
         choice = input("Enter your choice: ")
         if choice == '1':
             create_user()
